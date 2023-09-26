@@ -27,7 +27,7 @@ numrdgs = 500
 
 rm = visa.ResourceManager()
 lib = rm.visalib
-dmm = rm.open_resource('ASRL1::INSTR')
+dmm = rm.open_resource('USB0::0x05E6::0x6500::04548310::INSTR')
 
 lib.set_attribute(dmm.session, visa.constants.VI_ATTR_ASRL_FLOW_CNTRL, flowCtrl)
 lib.set_attribute(dmm.session, visa.constants.VI_ATTR_ASRL_BAUD, baudRate)
