@@ -16,35 +16,42 @@ dmm = rm.open_resource("---")
 dmm.baud_rate = 115200
 dmm.read_termination = '\n' # Gets rid of the \n when reading the values
 print(dmm.query("*IDN?"))
-
 print("~~~~~~~~~")
 
-# Data Collection
-voltages =  []
+# Data Preparation  
+voltages =  [] # Data-to-read
+resistances =[] #Data-to-calculate
 
+# Data Collection
 dmm.write(":SYSTem:BEEPer:IMMEdiate 300, .125; *RST")
 dcps.write(":SYSTem:BEEPer:IMMEdiate 300, 0.125; *RST")
 dcps.write("SOURce:OUTPut:STATe:ALL 1") # Turn on all inputs
 
+# Data Processing (for data-to-read)
 for i in range(11): # from 0 - 10
     volt = "Source:voltage " + str(i)
     print(volt)
     dcps.write(volt)
     time.sleep(1) # Buffer to let DCPS to settle
-    voltMeasurement =dmm.query(":MEAS:Volt?")
+    voltMeasurement = float(format(dmm.query(":MEAS:Volt?"))) # Query the DMM for volts, format out of sci-not up to 6 sigfigs (default), if its a string turn into float var  
     voltages.append(voltMeasurement)
     print(voltMeasurement)
 
 dcps.write("SOURce:OUTPut:STATe:ALL 0") # Turn off all inputs
 
-# Data Processing
+# Data Processing (for data-to-calculate)
+for v in voltages: # from 0 - 10
+    resistance = v/.05 # .05 amps hypothetically 
+    print(resistance)
+    resistances.append(resistance)
 
 # Data table
-d = {
-     'Volt': voltages
- }
+voltsData = pd.DataFrame({
+    'Volts': voltages})
+ohmsData = pd.DataFrame({
+    'Resistances':resistances})
 
 # Creating data table  
-df = pd.DataFrame(data=d)
-df.to_excel("output.xlsx")
-print(df)
+totalData = pd.concat([voltsData,ohmsData], axis=1)
+totalData.to_excel("output.xlsx")
+print(totalData)

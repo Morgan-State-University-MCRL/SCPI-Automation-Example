@@ -1,7 +1,5 @@
 # Morgan State Mechatronics Laboratory SCPI Automation (OS: Windows) 
-Still in process of writing...
-
-Last Updated 9/27/23
+Curated by Ethan Joyner but carried by Tektronics' Documentation  
 
 ## Synopsis
 Being able to automating the test equipment in the lab can help speed up  projects. This Repository of code and tutorials aims to help jump start others into being able to automate their labs. 
@@ -10,7 +8,7 @@ The only thing you need is a USB splitter and the according amount of USB-B to -
 
 This program will be able to collect data points from machines and output them into and excel file called *output.xlsx*
 
-### Instrument Setup
+## Instrument Setup
 The test script here uses a DMM6500 and a 2220G-30-1 DCPS. It should change the values of the DCPS in increments of one from 0 to 10. The DCPS should be wired on channel 1 to the front panel input of the DMM. Red to red, black to black. The USBs should be connecting the instruments to the computer running the script through whatever practical means. 
 
 ## Installing Prerequisite Software
@@ -56,7 +54,7 @@ At this point, is best to `git pull` this repository. Go to the folder where you
 
 ### Configuring Instruments
 
-***Make sure the DMM6500 you are using is configured for SCPI. Everything else is SCPI by default.***
+***Make sure the DMM6500 you are using is configured for SCPI. Everything else is SCPI by default.**
 
 #### Obtaining VISA Resource Name (VRN) 
 ##### ALL READ THE STEPS FIRST... Then Execute
@@ -73,9 +71,56 @@ That string of characters should be copy-pasted into its respective instrument b
 
  Enter the VRNs and press GO  
 
-## Tips and Reminders
+## Program Architecture
+
+For every column of data you want to collect you need to create a list. For the sake of formatting but all list names in the "Data Collection" section of the program. There are two types of lists: "Data-to-read" and "Data-to-calculate".
+
+### Data-to-set
+There is no example of this in test.py, but if you need to use a dynamic incrementor. You should set that where you are initializing the lists. 
+
+Ex:
+
+<code>
+
+    # Data Preparation 
+    SiDiodeVoltages = []
+    for volts in np.arange(0.0,0.7,0.1):
+        SiDiodeVoltages.append(round(volts,2))
+    for volts in np.arange(0.6,0.78,0.02):
+        SiDiodeVoltages.append(round(volts,2))
+</code>
+
+### Data-to-Acquire
+These are to be used in the Data Collection Section
+- O-Scope Measurements
+- DMM Values
+ 
+
+### Data-to-Calculate
+These are to be used in the Data Processing section. 
+- Values that you need to calculate 
+
+## Tips and Reminders and Goals
+
+### Common SCPI Commands
+
+#### DMM6500
+
+#### 2220G-30-1
+
+#### AFG1062
+
+#### TBS 2000B 
+
+- Tip: If you are using this repository in the Morgan State mechatronics laboratory, here is a [link](https://drive.google.com/drive/folders/141MMrx7FaCK2joSTZ039_YtFWnpEMH-e?usp=sharing) to all of the user and programmer manuals of the equipment that we have in the lab. 
+- Goal :I don't know of a great architecture yet but when I get around to it and have more practice with it all, I will be sure to share an example of it here.
+
+- Goal: Make the repository collaborative show different examples from different people. 
+
+-
 
 ## References
 
-Tektronics https://www.tek.com/en/documents/technical-brief/getting-started-with-oscilloscope-automation-and-python
+[Tektronics Python SCPI Guide](https://www.tek.com/en/documents/technical-brief/getting-started-with-oscilloscope-automation-and-python)
 
+[Different Lengths Columns](https://stackoverflow.com/questions/27126511/add-columns-different-length-pandas) 
