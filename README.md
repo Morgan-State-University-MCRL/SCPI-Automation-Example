@@ -55,6 +55,7 @@ At this point, is best to `git pull` this repository. Go to the folder where you
 ### Configuring Instruments
 
 ***Make sure the DMM6500 you are using is configured for SCPI. Everything else is SCPI by default.**
+Menu > System Column > Settings > Command Set > SCPI
 
 #### Obtaining VISA Resource Name (VRN) 
 ##### ALL READ THE STEPS FIRST... Then Execute
@@ -104,13 +105,64 @@ These are to be used in the Data Processing section.
 
 ### Common SCPI Commands
 
+- Reset
+
+    `*RST`
+
+
+
 #### DMM6500
+
+- DCV
+    
+    `:MEAS:Volt?`
+
+- DCI
+
+    `:MEAS:Curr?`
+- ACV
+
+- ACI
+
+- 2wOhm
+
+- Frequency
+
 
 #### 2220G-30-1
 
+- Set Voltage
+    
+    `Source:voltage ##V`
+
+- On/Off
+    `SOURce:OUTPut:STATe:ALL 1` or `SOURce:OUTPut:STATe:ALL 0`
 #### AFG1062
 
+- Set Frequency: 
+
+    `SOURce1:FREQuency:FIXed 500kHz`
+
+- Set Offset: 
+   
+    `SOURce1:VOLTage:LEVel:IMMediate:OFFSet 500mV`
+
+- Set Amplitude: 
+   
+    `SOURce1:VOLTage:LEVel:IMMediate:AMPLitude 1Vpp`
+
+- On/off: 
+   
+    `OUTPut1:STATe ON` or `OUTPut2:STATe OFF`
+
 #### TBS 2000B 
+
+- Frequency
+
+- Pk2Pk
+
+- Amplitude
+
 
 - Tip: If you are using this repository in the Morgan State mechatronics laboratory, here is a [link](https://drive.google.com/drive/folders/141MMrx7FaCK2joSTZ039_YtFWnpEMH-e?usp=sharing) to all of the user and programmer manuals of the equipment that we have in the lab. 
 - Goal :I don't know of a great architecture yet but when I get around to it and have more practice with it all, I will be sure to share an example of it here.
