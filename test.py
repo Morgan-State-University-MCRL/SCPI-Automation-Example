@@ -7,12 +7,12 @@ rm = pyvisa.ResourceManager()
 print(rm.list_resources())
 
 # Configuration for 2220G-30-1 
-dcps = rm.open_resource("---") # Use NI Max to view the 
+dcps = rm.open_resource("---") # Use NI Max to view the VRN
 dcps.baud_rate = 115200
 print(dcps.query("*IDN?"))
 
 # Configuration for DMM6500
-dmm = rm.open_resource("---") 
+dmm = rm.open_resource("---") #VRN for DMM Here
 dmm.baud_rate = 115200
 dmm.read_termination = '\n' # Gets rid of the \n when reading the values
 print(dmm.query("*IDN?"))
